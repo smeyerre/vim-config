@@ -12,3 +12,6 @@ Sets up NeoVim with some very handy plugins.
  - git clone git@github.com:smeyerre/vim-config.git ~/.vim-config
  - sh ~/.vim-config/setup.sh
 ```
+
+## TODO
+ - Update CoC completion config
