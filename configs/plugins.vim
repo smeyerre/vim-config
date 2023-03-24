@@ -73,5 +73,5 @@ lua require'nvim-treesitter.configs'.setup{ensure_installed="all",highlight={ena
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CoC.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:coc_global_extensions = [ 'coc-pyright', 'coc-clangd', 'coc-cmake', 'coc-eslint', 'coc-explorer', 'coc-go', 'coc-golines', 'coc-graphql', 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-git', 'coc-htmldjango', 'coc-lua', 'coc-omnisharp', 'coc-perl', 'coc-prettier', 'coc-sh', 'coc-sql', 'coc-svg', 'coc-toml', 'coc-yaml', 'coc-yank' ] 
+let g:coc_global_extensions = [ 'coc-pyright', 'coc-clangd', 'coc-cmake', 'coc-eslint', 'coc-explorer', 'coc-go', 'coc-graphql', 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-git', 'coc-htmldjango', 'coc-lua', 'coc-omnisharp', 'coc-perl', 'coc-prettier', 'coc-sh', 'coc-sql', 'coc-svg', 'coc-toml', 'coc-yaml', 'coc-yank' ] 
 
