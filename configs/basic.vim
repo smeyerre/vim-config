@@ -134,6 +134,8 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
+set t_Co=256
+
 " Colorscheme
 try
   let g:onedark_config = {

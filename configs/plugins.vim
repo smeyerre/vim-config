@@ -63,3 +63,8 @@ let g:ale_set_highlights = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NeoVim TreeSitter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua require'nvim-treesitter.configs'.setup{ensure_installed="all",highlight={enable=true},}
