@@ -68,3 +68,10 @@ let g:ale_lint_on_enter = 0
 " => NeoVim TreeSitter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua require'nvim-treesitter.configs'.setup{ensure_installed="all",highlight={enable=true},}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => CoC.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:coc_global_extensions = [ 'coc-pyright', 'coc-clangd', 'coc-cmake', 'coc-eslint', 'coc-explorer', 'coc-go', 'coc-golines', 'coc-graphql', 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-git', 'coc-htmldjango', 'coc-lua', 'coc-omnisharp', 'coc-perl', 'coc-prettier', 'coc-sh', 'coc-sql', 'coc-svg', 'coc-toml', 'coc-yaml', 'coc-yank' ] 
+
