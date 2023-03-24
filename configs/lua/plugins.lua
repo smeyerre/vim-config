@@ -9,6 +9,8 @@ return require('packer').startup(function(use)
 
   use 'navarasu/onedark.nvim'
 
+  use 'jlanzarotta/bufexplorer'
+
   use 'itchyny/lightline.vim'
 
   use 'preservim/nerdtree'
