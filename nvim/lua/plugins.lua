@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
   use 'itchyny/lightline.vim'
 
   use 'preservim/nerdtree'
-  
+
   use 'dense-analysis/ale'
 
   use 'tpope/vim-commentary'
