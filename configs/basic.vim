@@ -22,7 +22,7 @@
 " => Init
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " This line makes pacman-installed global Arch Linux vim packages work.
-source /usr/share/nvim/archlinux.vim
+luafile /usr/share/nvim/archlinux.lua
 
 " Load ~/.config/nvim/lua/plugins.lua
 lua require('plugins')
