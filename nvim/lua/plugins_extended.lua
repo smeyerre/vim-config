@@ -1,11 +1,31 @@
--- Buffer Explorer Configuration
-vim.g.bufExplorerDefaultHelp = 0
-vim.g.bufExplorerShowRelativePath = 1
-vim.g.bufExplorerFindActive = 1
-vim.g.bufExplorerSortBy = 'name'
-vim.keymap.set('n', '<leader>o', ':BufExplorer<CR>')
-
-
+-- Telescope setup
+vim.keymap.set('n', '<leader>o', ':Telescope buffers<CR>', { desc = "List buffers" })
+require('telescope').setup{
+  defaults = {
+    layout_strategy = 'vertical',
+    sorting_strategy = 'ascending',
+    mappings = {
+      i = {
+        ['<C-d>'] = require('telescope.actions').delete_buffer,  -- Delete buffer from picker
+        ['<C-j>'] = require('telescope.actions').move_selection_next,  -- Move in list
+        ['<C-k>'] = require('telescope.actions').move_selection_previous,
+        ['<C-q>'] = require('telescope.actions').smart_send_to_qflist + require('telescope.actions').open_qflist,  -- Send selected to quickfix
+      }
+    }
+  },
+  pickers = {
+    buffers = {
+      sort_lastused = true,  -- Sort by most recently used
+      sort_mru = true,
+      ignore_current_buffer = false,  -- Show current buffer in list
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",  -- Delete buffer with Ctrl-d
+        }
+      }
+    }
+  }
+}
 
 -- lualine Configuration
 local function molten_status()
@@ -39,14 +59,83 @@ require('lualine').setup {
   }
 }
 
--- NERDTree Configuration
-vim.g.NERDTreeWinPos = "left"
-vim.g.NERDTreeShowHidden = 0
-vim.g.NERDTreeIgnore = { '\\.pyc$', '__pycache__' }
-vim.g.NERDTreeWinSize = 35
-vim.keymap.set('n', '<leader>nn', ':NERDTreeToggle<CR>')
-vim.keymap.set('n', '<leader>nb', ':NERDTreeFromBookmark<Space>')
-vim.keymap.set('n', '<leader>nf', ':NERDTreeFind<CR>')
+-- nvim-tree Configuration
+require("nvim-tree").setup({
+    view = {
+        width = 35,  -- only needed because different from default 30
+    },
+})
+local api = require("nvim-tree.api")
+vim.keymap.set('n', '<leader>nn', api.tree.toggle, { desc = "Toggle tree" })
+vim.keymap.set('n', '<leader>nf', api.tree.find_file, { desc = "Find in tree" })
+
+-- Treesitter Configuration
+require('nvim-treesitter.configs').setup({
+  ensure_installed = "all",
+  -- ensure_installed = { "angular", "arduino", "asm", "bash", "c", "c_sharp", "cmake", "comment", "commonlisp", "cpp", "css", "csv", "cuda", "diff", "dockerfile", "dot", "gdscript", "gdshader", "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore", "glsl", "go", "goctl", "gdresource", "gomod", "gosum", "gotmpl", "gowork", "gpg", "graphql", "html", "htmldjango", "http", "java", "javascript", "jsdoc", "json", "json5", "kotlin", "latex", "lua", "luadoc", "lua_patterns", "make", "markdown", "markdown_inline", "nginx", "perl", "printf", "python", "r", "racket", "regex", "pip_requirements", "ruby", "rust", "scala", "scheme", "scss", "sql", "terraform", "tmux", "toml", "typescript", "vim", "vimdoc", "xml", "yaml", "query" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = false,
+
+  -- List of parsers to ignore installing (or "all")
+  ignore_install = {},
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+
+  textobjects = {
+    move = {
+      enable = true,
+      set_jumps = false,
+      goto_next_start = {
+        ["]b"] = { query = "@code_cell.inner", desc = "next code block" },
+      },
+      goto_previous_start = {
+        ["[b"] = { query = "@code_cell.inner", desc = "previous code block" },
+      },
+    },
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["ib"] = { query = "@code_cell.inner", desc = "in block" },
+        ["ab"] = { query = "@code_cell.outer", desc = "around block" },
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>sbl"] = "@code_cell.outer",
+      },
+      swap_previous = {
+        ["<leader>sbh"] = "@code_cell.outer",
+      },
+    },
+  },
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<CR>",  -- start incremental selection
+      node_incremental = "<CR>", -- increment selection
+      node_decremental = "<BS>", -- decrement selection
+      scope_incremental = "<TAB>", -- increment selection to scope
+    },
+  },
+})
 
 -- molten-nvim Configuration
 -- I find auto open annoying, keep in mind setting this option will require setting
@@ -59,6 +148,7 @@ vim.g.molten_wrap_output = true
 vim.g.molten_virt_text_output = true
 -- this will make it so the output shows up below the \`\`\` cell delimiter
 vim.g.molten_virt_lines_off_by_1 = true
+vim.api.nvim_set_hl(0, "MoltenVirtualText", { link = "Type" })
 vim.keymap.set("n", "<localleader>e", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator", silent = true })
 vim.keymap.set("n", "<localleader>os", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
 vim.keymap.set("n", "<localleader>rr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
@@ -163,64 +253,6 @@ if ok then
 else
     vim.notify("Failed to load quarto", vim.log.levels.WARN)
 end
-
--- Treesitter Configuration
-require('nvim-treesitter.configs').setup({
-  ensure_installed = "all",
-  -- ensure_installed = { "angular", "arduino", "asm", "bash", "c", "c_sharp", "cmake", "comment", "commonlisp", "cpp", "css", "csv", "cuda", "diff", "dockerfile", "dot", "gdscript", "gdshader", "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore", "glsl", "go", "goctl", "gdresource", "gomod", "gosum", "gotmpl", "gowork", "gpg", "graphql", "html", "htmldjango", "http", "java", "javascript", "jsdoc", "json", "json5", "kotlin", "latex", "lua", "luadoc", "lua_patterns", "make", "markdown", "markdown_inline", "nginx", "perl", "printf", "python", "r", "racket", "regex", "pip_requirements", "ruby", "rust", "scala", "scheme", "scss", "sql", "terraform", "tmux", "toml", "typescript", "vim", "vimdoc", "xml", "yaml", "query" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = false,
-
-  -- List of parsers to ignore installing (or "all")
-  ignore_install = {},
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-
-  textobjects = {
-    move = {
-      enable = true,
-      set_jumps = false,
-      goto_next_start = {
-        ["]b"] = { query = "@code_cell.inner", desc = "next code block" },
-      },
-      goto_previous_start = {
-        ["[b"] = { query = "@code_cell.inner", desc = "previous code block" },
-      },
-    },
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["ib"] = { query = "@code_cell.inner", desc = "in block" },
-        ["ab"] = { query = "@code_cell.outer", desc = "around block" },
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader>sbl"] = "@code_cell.outer",
-      },
-      swap_previous = {
-        ["<leader>sbh"] = "@code_cell.outer",
-      },
-    },
-  }
-})
 
 -- nvim-lspconfig Configuration
 require("lspconfig")["pyright"].setup({

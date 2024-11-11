@@ -97,10 +97,17 @@ map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
 -- Buffer management
-map('n', '<leader>bd', ':Bclose<CR>:tabclose<CR>gT')
-map('n', '<leader>ba', ':bufdo bd<CR>')
-map('n', '<leader>l', ':bnext<CR>')
-map('n', '<leader>h', ':bprevious<CR>')
+vim.keymap.set('n', '<leader>bd', function()  -- Close current buffer
+    -- Save buffer number
+    local current = vim.api.nvim_get_current_buf()
+    -- Switch to previous buffer
+    vim.cmd('bp')
+    -- Delete the saved buffer number
+    vim.cmd('bd' .. current)
+end, { desc = "Delete buffer" })
+vim.keymap.set('n', '<leader>ba', ':bufdo bd<CR>', { desc = "Delete all buffers" })
+vim.keymap.set('n', '<leader>l', ':bnext<CR>', { desc = "Next buffer" })
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>', { desc = "Previous buffer" })
 
 -- Tab management
 map('n', '<leader>tn', ':tabnew<CR>')
