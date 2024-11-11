@@ -27,7 +27,7 @@ Sets up NeoVim with some very handy plugins.
     - nvim-lspconfig
     - nvim-treesitter
     - nvim-treesitter-textobjects
-    - nvim-web-devicons (not loaded)
+    - nvim-web-devicons
     - onedark.nvim
     - otter.nvim
     - packer.nvim
