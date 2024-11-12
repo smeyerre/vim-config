@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 -- ===========================
 
 dofile('/usr/share/nvim/archlinux.lua') -- This line makes pacman-installed global Arch Linux vim packages work.
-require('plugins') -- Load ~/.config/nvim/lua/plugins.lua
-require('basic')
-require('plugins_extended')
+require("config.lazy")
+require("config.autocmds")
+require('config.basic')
 require('lsp')
 require('completion')

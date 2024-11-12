@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Setting up NeoVim..."
-echo "This configuration uses Packer to manage plugins. Make sure you have it installed before continuing."
+echo "This configuration uses Lazy to manage plugins."
 echo "Press [Enter] to continue..."
 while true; do
   read -s -n 1 input
@@ -13,4 +13,4 @@ HERE=$(dirname "${BASH_SOURCE[0]}")
 command cp -r $HERE/nvim ~/.config/
 
 echo "NeoVim all set up! You may want to alias 'vim' to 'nvim'"
-echo "Don't forget to run `:PackerInstall` or `:PackerSync`/`:PackerCompile` from nvim"
+echo "Don't forget to run `:Lazy sync` from nvim"

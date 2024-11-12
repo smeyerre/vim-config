@@ -1,82 +1,3 @@
--- General Settings
-vim.opt.history = 500
-vim.opt.autoread = true -- Set to auto read when a file is changed from the outside
-vim.opt.updatetime = 300
-
--- Leader key
-vim.g.mapleader = ","
--- Local leader for filetype-specific commands
-vim.g.maplocalleader = "\\"
-
--- UI Configuration
-vim.opt.scrolloff = 7
-vim.opt.wildmenu = true
-vim.opt.wildignore = {
-  "*.o", "*~", "*.pyc",
-  "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS_Store"
-}
-vim.opt.ruler = true
-vim.opt.cmdheight = 1
-vim.opt.hidden = true
-vim.opt.backspace = { "eol", "start", "indent" }
-vim.opt.whichwrap:append("<,>,h,l")
-
--- Search Configuration
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.lazyredraw = true
-vim.opt.magic = true
-vim.opt.showmatch = true
-vim.opt.mat = 2
-
--- No Sound on Errors
-vim.opt.errorbells = false
-vim.opt.visualbell = false
-
--- Appearance
-vim.opt.foldcolumn = "1"
-
--- Colors and Fonts
-vim.opt.termguicolors = true
-
--- Try to load onedark colorscheme
-local ok, _ = pcall(function()
-  vim.g.onedark_config = {
-    style = 'deep'
-  }
-  vim.cmd('colorscheme onedark')
-end)
-
-if not ok then
-  vim.cmd('colorscheme desert')
-end
-
-vim.opt.background = "dark"
-vim.opt.encoding = "utf8"
-vim.opt.fileformats = { "unix", "dos", "mac" }
-vim.opt.guifont = "IBM Plex Mono:h14,Hack:h14,Source Code Pro:h12,Bitstream Vera Sans Mono:h11"
-
--- File and Backup
-vim.opt.backup = false
-vim.opt.writebackup = false
-vim.opt.swapfile = false
-
--- Text, Tab, and Indent
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.linebreak = true
-vim.opt.textwidth = 500
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.wrap = true
-
--- Clipboard
-vim.opt.clipboard:append("unnamedplus")
-
 -- Key Mappings
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
@@ -138,10 +59,6 @@ end)
 -- Switch CWD to current buffer's directory
 vim.keymap.set('n', '<leader>cd', ':cd %:p:h<CR>:pwd<CR>')
 
--- Buffer switching behavior
-vim.opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
-vim.opt.showtabline = 2
-
 -- Helper Functions
 _G.clean_extra_spaces = function()
   local save_cursor = vim.fn.getpos(".")
@@ -168,23 +85,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
--- Status Line Configuration
-vim.opt.laststatus = 2
-
--- First define the HasPaste function
-_G.HasPaste = function()
-  if vim.opt.paste:get() then
-    return 'PASTE MODE  '
-  end
-  return ''
-end
-
--- Set the statusline
-vim.opt.statusline = string.format(
-  ' %%{%s}%%F%%m%%r%%h %%w  CWD: %%r%%{getcwd()}%%h   Line: %%l  Column: %%c',
-  'v:lua.HasPaste()'
-)
 
 -- Spell Checking Mappings
 map('n', '<leader>ss', ':setlocal spell!<CR>') -- Pressing ,ss will toggle and untoggle spell checking
