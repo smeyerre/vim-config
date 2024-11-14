@@ -12,6 +12,9 @@ return {
       view = {
         width = 30,
       },
+      filters = {
+        git_ignored = false,
+      }
     }
   }
 }
