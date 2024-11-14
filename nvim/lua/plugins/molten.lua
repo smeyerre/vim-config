@@ -1,10 +1,14 @@
 return {
   {
     'benlubas/molten-nvim',
-    dependencies = { '3rd/image.nvim' },
+    dependencies = {
+      '3rd/image.nvim',
+      -- 'nvim-treesitter',
+      -- 'GCBallesteros/jupytext.nvim',  -- add this to ensure correct load order
+    },
     build = ':UpdateRemotePlugins',
     ft = { 'python', 'markdown', 'ipynb' },  -- lazy load for these filetypes
-    init = function()  -- use init for setting globals
+    config = function()
       vim.g.molten_image_provider = "image.nvim"
       -- I find auto open annoying, keep in mind setting this option will require setting
       -- a keybind for `:noautocmd MoltenEnterOutput` to open the output again
@@ -47,3 +51,4 @@ return {
     }
   }
 }
+

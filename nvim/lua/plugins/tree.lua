@@ -10,7 +10,7 @@ return {
     },
     opts = {
       view = {
-        width = 35,
+        width = 30,
       },
     }
   }

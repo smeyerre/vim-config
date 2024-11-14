@@ -1,11 +1,11 @@
 return {
   {
     'quarto-dev/quarto-nvim',
+    ft = { 'quarto', 'markdown' },
     dependencies = {
       'jmbuhr/otter.nvim',
       'neovim/nvim-lspconfig'
     },
-    ft = { 'quarto', 'markdown' },
     opts = {
       lspFeatures = {
         languages = { "python" },

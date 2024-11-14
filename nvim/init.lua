@@ -9,5 +9,4 @@ dofile('/usr/share/nvim/archlinux.lua') -- This line makes pacman-installed glob
 require("config.lazy")
 require("config.autocmds")
 require('config.basic')
-require('lsp')
-require('completion')
+

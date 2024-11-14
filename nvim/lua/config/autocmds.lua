@@ -127,21 +127,3 @@ autocmd("BufEnter", {
     end,
 })
 
--- Quarto activation group
-local quarto_activate = augroup('QuartoActivate', { clear = true })
-
--- Handle quarto activation for markdown files
-autocmd("FileType", {
-    group = quarto_activate,
-    pattern = { "markdown" },
-    callback = function()
-        vim.schedule(function()
-            local status_ok, quarto = pcall(require, "quarto")
-            if status_ok then
-                quarto.activate()
-            else
-                print("Could not load quarto for markdown file")
-            end
-        end)
-    end,
-})

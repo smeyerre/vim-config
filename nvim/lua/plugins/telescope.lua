@@ -10,7 +10,6 @@ return {
     },
     opts = {
       defaults = {
-        layout_strategy = 'vertical',
         sorting_strategy = 'ascending',
         mappings = {
           i = {
@@ -19,7 +18,7 @@ return {
             ['<C-k>'] = require('telescope.actions').move_selection_previous,
             ['<C-q>'] = require('telescope.actions').smart_send_to_qflist + require('telescope.actions').open_qflist, -- send selected to quickfix
           }
-        }
+        },
       },
       pickers = {
         buffers = {
