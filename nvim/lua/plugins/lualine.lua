@@ -25,6 +25,12 @@ return {
         theme = 'onedark',
       },
       sections = {
+        lualine_c = {
+          {
+            'filename',
+            path = 1, -- relative path
+          }
+        },
         lualine_x = {
           {
             molten_status,
